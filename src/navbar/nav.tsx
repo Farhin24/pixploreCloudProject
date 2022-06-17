@@ -59,7 +59,7 @@ export default function Navbar() {
         navigate("/dashboard")
       }}>User Profile</MenuItem>
       <MenuItem onClick={() => {
-        navigate("/login")
+        navigate("/")
       }}>Logout</MenuItem>
     </Menu>
   );
@@ -156,7 +156,7 @@ export default function Navbar() {
                 fontWeight: "bold",
               }}
               onClick={() => {
-                navigate('/feed/profiles')
+                navigate('/feed/posts')
               }}
             >
               EXPLORE
