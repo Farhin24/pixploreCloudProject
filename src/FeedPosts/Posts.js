@@ -8,7 +8,6 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import { useNavigate } from "react-router-dom";
 import Divider from '@mui/material/Divider';
-import Navbar from '../Navbar/Navbar';
 import { margin } from '@mui/system';
 
 function Posts(props) {

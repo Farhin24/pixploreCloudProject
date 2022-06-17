@@ -55,7 +55,7 @@ function PostFeed() {
                                     onSumbit()
                                 }
                             }}
-                            label="Serach By Item Name"
+                            label="Search By Item Name"
                         />
                     </Grid>
                     {/* <Grid item md={3} sx={{  width: "10%", height:'50%' }}>
