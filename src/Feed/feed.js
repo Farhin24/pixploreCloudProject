@@ -46,7 +46,7 @@ export default function Album() {
           bottom:"5%",
           right:"5%"}}>
             
-        <Fab color="primary" aria-label="add" >
+        <Fab color="primary" aria-label="add"  href="/user/createpost">
           <AddIcon />
         </Fab>
       </div>

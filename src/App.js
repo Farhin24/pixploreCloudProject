@@ -10,6 +10,8 @@ import SignUp from './up/SignUp.js';
 
 import Feed from './Feed/feed.js';
 import PostFeed from './FeedPosts/PostFeed.js';
+import CreatePost from "./Posts/createPost";
+import UserProfile from "./userprofile/userProfile";
 
 const SidebarLayout = () => (
   <>
@@ -25,7 +27,9 @@ function App() {
         <Routes>
         <Route element={<SidebarLayout/>}>
         <Route path="/user/feed" element={<Feed />} />
-        <Route path="/feed/posts" element={<PostFeed />} />                            
+        <Route path="/feed/posts" element={<PostFeed />} />  
+        <Route path="/user/createpost" element={<CreatePost />} />
+          <Route path="/user/profile" element={<UserProfile />} />                          
         
           </Route>
 
