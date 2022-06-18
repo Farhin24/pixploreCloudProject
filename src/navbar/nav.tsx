@@ -56,7 +56,7 @@ export default function Navbar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={() => {
-        navigate("/dashboard")
+        navigate("/user/profile")
       }}>User Profile</MenuItem>
       <MenuItem onClick={() => {
         navigate("/")
