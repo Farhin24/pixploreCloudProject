@@ -16,8 +16,9 @@ import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import { Fab } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-
+import { useNavigate } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Navigate } from 'react-router-dom';
 
 function Copyright() {
   return (
@@ -37,6 +38,7 @@ const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 const theme = createTheme();
 
 export default function Album() {
+  const navigate = useNavigate();
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -46,8 +48,8 @@ export default function Album() {
           bottom:"5%",
           right:"5%"}}>
             
-        <Fab color="primary" aria-label="add"  href="/user/createpost">
-          <AddIcon />
+        <Fab color="primary" aria-label="add" >
+          <AddIcon onClick={()=> navigate("/create/post")}/>
         </Fab>
       </div>
       {/* Hero unit */}
@@ -91,25 +93,17 @@ export default function Album() {
             <Grid item key={card} xs={12} sm={6} md={4}>
               <Card
                 sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                onClick={()=> navigate("/view/post")}
               >
                 <CardMedia
                   component="img"
                   image="https://source.unsplash.com/random"
                   alt="random"
                 />
-                <CardContent sx={{ flexGrow: 1 }}>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    Heading
-                  </Typography>
-                  <Typography>
-                    This is a media card. You can use this section to describe the
-                    content.
-                  </Typography>
-                </CardContent>
-                <CardActions>
+                {/* <CardActions>
                   <Button size="small">View</Button>
                   <Button size="small">Edit</Button>
-                </CardActions>
+                </CardActions> */}
               </Card>
             </Grid>
           ))}
