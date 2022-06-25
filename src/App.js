@@ -9,6 +9,7 @@ import SignIn from './up/SignIn.js';
 import SignUp from './up/SignUp.js';
 
 import Feed from './Feed/feed.js'
+import ViewPost from './viewPost/view.js'
 
 const SidebarLayout = () => (
   <>
@@ -24,6 +25,8 @@ function App() {
         <Routes>
         <Route element={<SidebarLayout/>}>
         <Route path="/user/feed" element={<Feed />} />
+        <Route path="/view/post" element={<ViewPost />} />
+        
 
           </Route>
 
