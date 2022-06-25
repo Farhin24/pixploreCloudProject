@@ -22,7 +22,8 @@ function Posts(props) {
                             <Card sx={{
                                 maxWidth: 'auto',
                                 maxHeight: 'auto'
-                            }} onClick={() => { navigate('/posts/view') }}>
+
+                            }} onClick={()=> navigate("/view/post")}>
                                 <CardMedia                                
                                     component="img"
                                     height={'200'}
