@@ -14,6 +14,10 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import { Navigate } from 'react-router-dom';
+import UserPool from '../AWSCongito/UserPool';
+import { useState } from 'react';
+import { CognitoUser, AuthenticationDetails } from "amazon-cognito-identity-js";
+import Swal from 'sweetalert2';
 
 function Copyright(props) {
   return (
@@ -31,13 +35,60 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignInSide() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
       password: data.get('password'),
+    });
+  };
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    const user = new CognitoUser({
+      Username: email,
+      Pool: UserPool
+    });
+
+    const authDetails = new AuthenticationDetails(
+      {
+        Username: email,
+        Password: password
+      }
+    );
+
+    user.authenticateUser(authDetails, {
+      onSuccess: (data) => {
+        console.log("onSuccess: ", data);
+        navigate("/user/feed");
+      },
+      onFailure: (err) => {
+        console.error("onFailure: ", err);
+        const indextitleMsg = err.toString().indexOf(":");
+        const titleMsg = err.toString().substr(indextitleMsg + 1);
+      
+        Swal.fire({
+          title: titleMsg,
+          width: 600,
+          padding: '3em',
+          color: '#000000',
+          background: '#FFFFFF',
+          backdrop: `
+            rgb(0,0,0,0.4)
+            url("/images/nyan-cat.gif")
+            left top
+            no-repeat
+          `
+        });
+      },
+      newPasswordRequired: (data) => {
+        console.log("newPasswordRequired: ", data);
+      },
     });
   };
 
@@ -84,6 +135,8 @@ export default function SignInSide() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
                 autoFocus
               />
               <TextField
@@ -94,7 +147,10 @@ export default function SignInSide() {
                 label="Password"
                 type="password"
                 id="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
                 autoComplete="current-password"
+
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
@@ -105,7 +161,8 @@ export default function SignInSide() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                onClick={()=> navigate("/user/feed")}
+                // onClick={() => navigate("/user/feed")}
+                onClick={onSubmit}
               >
                 Sign In
               </Button>
@@ -116,7 +173,7 @@ export default function SignInSide() {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2" onClick={()=> navigate("/signup")}>
+                  <Link href="#" variant="body2" onClick={() => navigate("/signup")}>
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
