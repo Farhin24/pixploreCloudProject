@@ -2,6 +2,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Posts from './Posts';
 import axios from 'axios';
+import Typography from '@mui/material/Typography';
 import React, { useState, useEffect, Fragment } from 'react';
 import { Box, Grid } from '@mui/material';
 
@@ -39,7 +40,18 @@ function PostFeed() {
 
     return (
         <Box sx={{ height: "100%", marginTop: "4%" }}>
+            <Typography
+            component="h1"
+            variant="h2"
+            align="center"
+            color="text.primary"
+            gutterBottom
+          >
+            E X P L O R E 
+          </Typography>
             <Box sx={{ height: "10%", display: 'flex', justifyContent: "center" }}>
+
+            
                 {/* <Grid container spacing={1} sx={{ height: "100%", width: "100%" ,justifyContent: "center" }}>
                     <Grid item md={9} sx={{ marginLeft:'10%',height: "50%", width: "90%", marginTop: '1%' }}> */}
                     <Grid>
