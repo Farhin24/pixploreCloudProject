@@ -29,8 +29,6 @@ function App() {
           <Route element={<SidebarLayout />}>
             <Route path="/user/feed" element={<Feed />} />
             <Route path="/view/post" element={<ViewPost />} />
-
-
             <Route path="/create/post" element={<CreatePost />} />
             <Route path="/feed/posts" element={<PostFeed />} />
             <Route path="/user/createpost" element={<CreatePost />} />
