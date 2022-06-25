@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import { Fragment } from 'react';
-import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Nav from './navbar/nav.tsx'
 import { Outlet } from 'react-router-dom';
 
@@ -21,23 +21,23 @@ const SidebarLayout = () => (
 );
 function App() {
   return (
-    
-      <Router>
-        <div className='container'>
-        <Routes>
-        <Route element={<SidebarLayout/>}>
-        <Route path="/user/feed" element={<Feed />} />
-        <Route path="/feed/posts" element={<PostFeed />} />  
-        <Route path="/user/createpost" element={<CreatePost />} />
-          <Route path="/user/profile" element={<UserProfile />} />                          
-        
-          </Route>
 
+    <Router>
+      <div className='container'>
+        <Routes>
+          <Route element={<SidebarLayout />}>
+            <Route path="/user/feed" element={<Feed />} />
+            <Route path="/feed/posts" element={<PostFeed />} />
+            <Route path="/user/createpost" element={<CreatePost />} />
+            <Route path="/user/profile" element={<UserProfile />} />
+
+          </Route>
+          
           <Route path="/" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
         </Routes>
-        </div>
-      </Router>
+      </div>
+    </Router>
 
   );
 }
