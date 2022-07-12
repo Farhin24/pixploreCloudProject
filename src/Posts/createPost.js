@@ -12,10 +12,15 @@ import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+//const cors = require('cors');
+//app.use(cors());
+import { useState } from "react";
+import axios from "axios";
 
 const Input = styled("input")({
   display: "none",
 });
+
 
 function Copyright() {
   return (
@@ -30,6 +35,38 @@ function Copyright() {
   );
 }
 function CreatePost() {
+
+  const [photo, setPhoto] = useState("");
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    
+    const response = {
+      statusCode: 200,
+      headers: {
+          "Access-Control-Allow-Headers" : "Content-Type",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "PUT"
+      },
+      body: JSON.stringify('Hello from Lambda!'),
+  };
+
+    axios.post("https://xqh1t1hyb4.execute-api.us-east-1.amazonaws.com/d1/pixploreimags/test.jpg", photo
+      ,{
+    headers: {
+          'Access-Control-Allow-Origin' : '*',
+          'Access-Control-Allow-Headers':'X-Api-Key',
+    }}
+    )
+    .then((result)=>{
+      console.log(result.data);
+    })
+    .catch((err)=>
+    {
+      console.error(err);
+    });
+  };
+
   return (
     <>
       <Box
@@ -62,19 +99,11 @@ function CreatePost() {
           />
           <br />
           <Stack direction="row" alignItems="center" spacing={2}>
-            <label htmlFor="contained-button-file">
-              <Input
-                accept="image/*"
-                id="contained-button-file"
-                multiple
-                type="file"
+
+            <label htmlFor="photo">
+              <Input accept="image/*" id="photo" type="file" value={photo}
+                onChange={(event) => setPhoto(event.target.value)}
               />
-              <Button variant="contained" component="span">
-                Upload
-              </Button>
-            </label>
-            <label htmlFor="icon-button-file">
-              <Input accept="image/*" id="icon-button-file" type="file" />
               <IconButton
                 color="primary"
                 aria-label="upload picture"
@@ -82,6 +111,12 @@ function CreatePost() {
               >
                 <PhotoCamera />
               </IconButton>
+            </label>
+            <label htmlFor="contained-button-file">
+
+              <Button variant="contained" component="span" onClick={onSubmit}>
+                Submit
+              </Button>
             </label>
           </Stack>
           <Container sx={{ py: 3 }}>
