@@ -10,6 +10,7 @@
     "@mui/material": "^5.8.4",
     "amazon-cognito-identity-js": "^5.2.9",
     "axios": "^0.27.2",
+    "cors": "^2.8.5",
     "express-favicon": "^2.0.1",
     "react": "latest",
     "react-avatar": "^5.0.1",
