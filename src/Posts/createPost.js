@@ -12,10 +12,17 @@ import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+//const cors = require('cors');
+//app.use(cors());
+import { useState } from "react";
+import axios from "axios";
+import { useAuthenticator } from '@aws-amplify/ui-react';
+import { Login } from "../components/Login";
 
 const Input = styled("input")({
   display: "none",
 });
+
 
 function Copyright() {
   return (
@@ -29,7 +36,32 @@ function Copyright() {
     </Typography>
   );
 }
-function CreatePost() {
+export default function CreatePost() {
+  const { route } = useAuthenticator(context => [context.route]);
+  const {user, signOut} = useAuthenticator((context) => [context.user]);  
+  
+  return route === 'authenticated' ? <NewCreatePost />: <Login />;  
+}
+function NewCreatePost() {
+
+  const [photo, setPhoto] = useState("");
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    
+    
+  
+
+    axios.put("https://xqh1t1hyb4.execute-api.us-east-1.amazonaws.com/d1/pixploreimags/tst.jpg", photo)
+    .then((result)=>{
+      console.log(result.data);
+    })
+    .catch((err)=>
+    {
+      console.error(err);
+    });
+  };
+
   return (
     <>
       <Box
@@ -62,19 +94,11 @@ function CreatePost() {
           />
           <br />
           <Stack direction="row" alignItems="center" spacing={2}>
-            <label htmlFor="contained-button-file">
-              <Input
-                accept="image/*"
-                id="contained-button-file"
-                multiple
-                type="file"
+
+            <label htmlFor="photo">
+              <Input accept="image/*" id="photo" type="file" value={photo}
+                onChange={(event) => setPhoto(event.target.value)}
               />
-              <Button variant="contained" component="span">
-                Upload
-              </Button>
-            </label>
-            <label htmlFor="icon-button-file">
-              <Input accept="image/*" id="icon-button-file" type="file" />
               <IconButton
                 color="primary"
                 aria-label="upload picture"
@@ -82,6 +106,12 @@ function CreatePost() {
               >
                 <PhotoCamera />
               </IconButton>
+            </label>
+            <label htmlFor="contained-button-file">
+
+              <Button variant="contained" component="span" onClick={onSubmit}>
+                Submit
+              </Button>
             </label>
           </Stack>
           <Container sx={{ py: 3 }}>
@@ -104,10 +134,7 @@ function CreatePost() {
         </form>
       </Box>
       {/* Footer */}
-      <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
-        <Typography variant="h6" align="center" gutterBottom>
-          END
-        </Typography>
+      <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">        
         <Typography
           variant="subtitle1"
           align="center"
@@ -123,4 +150,3 @@ function CreatePost() {
   );
 }
 
-export default CreatePost;

@@ -1,18 +1,17 @@
-import logo from './logo.svg';
 import './App.css';
-import { Fragment } from 'react';
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Authenticator } from '@aws-amplify/ui-react';
+import { BrowserRouter, Outlet, Routes, Route } from 'react-router-dom';
 import Nav from './navbar/nav.tsx'
-import { Outlet } from 'react-router-dom';
 
-import SignIn from './up/SignIn.js';
-import SignUp from './up/SignUp.js';
-
+import { Login } from './components/Login';
 import ViewPost from './viewPost/view.js';
 import Feed from './Feed/feed.js';
 import PostFeed from './FeedPosts/PostFeed.js';
 import CreatePost from "./Posts/createPost";
 import UserProfile from "./userprofile/userProfile";
+import { useAuthenticator } from '@aws-amplify/ui-react';
+
+import Interests from './Interests/interest';
 
 const SidebarLayout = () => (
   <>
@@ -20,29 +19,47 @@ const SidebarLayout = () => (
     <Outlet />
   </>
 );
-function App() {
+
+function MyRoutes() {
+  const { route } = useAuthenticator(context => [context.route]);
+  const {user, signOut} = useAuthenticator((context) => [context.user]);  
+  
   return (
+    <BrowserRouter>
 
-    <Router>
-      <div className='container'>
-        <Routes>
-          <Route element={<SidebarLayout />}>
-            <Route path="/user/feed" element={<Feed />} />
-            <Route path="/view/post" element={<ViewPost />} />
-            <Route path="/create/post" element={<CreatePost />} />
-            <Route path="/feed/posts" element={<PostFeed />} />
-            <Route path="/user/createpost" element={<CreatePost />} />
-            <Route path="/user/profile" element={<UserProfile />} />
+      {/* <Router> */}
+      {/* {route === 'authenticated'? <h1>{user.username}</h1>: "No"} */}
+        <div className='container'>
+          <Routes>
+            <Route element={<SidebarLayout />}>                
+              <Route path="/user/feed" element={<Feed /> } />
+              <Route path="/view/post" element={<ViewPost />} />
+              <Route path="/create/post" element={<CreatePost />} />
+              <Route path="/feed/posts" element={<PostFeed />} />
+              <Route path="/user/createpost" element={<CreatePost />} />
+              <Route path="/user/profile" element={<UserProfile />} />
+              <Route path="/user/interest" element={<Interests />} />
+            </Route>
+            <Route path="/" element={<Login />} />
+            {/* <Route path="/" element={<Layout />} /> */}
+{/* 
 
-          </Route>
-
-          <Route path="/" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
-        </Routes>
-      </div>
-    </Router>
-
+            <Route path="/" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} /> */}
+            
+          </Routes>
+        </div>
+      {/* </Router> */}
+    </BrowserRouter>
   );
+}
+
+function App() {
+return (
+  <Authenticator.Provider>
+    <MyRoutes />
+  </Authenticator.Provider>
+);
 }
 
 export default App;

@@ -1,4 +1,4 @@
-import * as React from 'react';
+
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import CameraIcon from '@mui/icons-material/PhotoCamera';
@@ -19,6 +19,10 @@ import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Navigate } from 'react-router-dom';
+import React, { useRef, useState, useEffect } from "react";
+import axios from 'axios';
+import { useAuthenticator } from '@aws-amplify/ui-react';
+import { Login } from '../components/Login';
 
 function Copyright() {
   return (
@@ -33,16 +37,38 @@ function Copyright() {
   );
 }
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+//var cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const theme = createTheme();
 
-export default function Album() {
-  const navigate = useNavigate();
+
+export default function Album(){
+  const { route } = useAuthenticator(context => [context.route]);
+  const {user, signOut} = useAuthenticator((context) => [context.user]);  
+  
+  return route === 'authenticated' ? <OldAlbum />: <Login />;
+}
+
+function OldAlbum()  {
+  var [links,setLinks] = useState([]);  
+  let navigate = useNavigate();
+  useEffect(()=>{
+    axios.post('https://fmzdy563bcs2aw5jo6shmau3ty0coqao.lambda-url.us-east-1.on.aws/',{interests:"Mountain,Road,Ocean" }) 
+    .then(function (response) {
+      console.log(response.data.toString().split(","))
+      setLinks(response.data.toString().split(","));
+   })
+   .catch(function (error) {
+     console.log(error);
+   })
+    
+  },[]);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <main>
+        <p>{}</p>
         <div className='addIcon' style={{
           position: "fixed",
           bottom:"5%",
@@ -89,7 +115,9 @@ export default function Album() {
       <Container sx={{ py: 1 }} maxWidth="md">
         {/* End hero unit */}
         <Grid container spacing={4}>
-          {cards.map((card) => (
+          
+          
+          {links.map((card) => (
             <Grid item key={card} xs={12} sm={6} md={4}>
               <Card
                 sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
@@ -97,7 +125,7 @@ export default function Album() {
               >
                 <CardMedia
                   component="img"
-                  image="https://source.unsplash.com/random"
+                  image={card}
                   alt="random"
                 />
                 {/* <CardActions>
@@ -112,9 +140,7 @@ export default function Album() {
     </main>
       {/* Footer */ }
   <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
-    <Typography variant="h6" align="center" gutterBottom>
-      END
-    </Typography>
+    
     <Typography
       variant="subtitle1"
       align="center"

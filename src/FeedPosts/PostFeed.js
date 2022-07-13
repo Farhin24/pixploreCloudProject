@@ -1,65 +1,80 @@
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Posts from './Posts';
 import axios from 'axios';
 import Typography from '@mui/material/Typography';
 import React, { useState, useEffect, Fragment } from 'react';
 import { Box, Grid } from '@mui/material';
+import Card from '@mui/material/Card';
+import { useNavigate } from "react-router-dom";
+import CardMedia from '@mui/material/CardMedia';
+import Container from '@mui/material/Container';
+import { useAuthenticator } from '@aws-amplify/ui-react';
+import { Login } from "../components/Login";
+import Link from '@mui/material/Link';
 
-function PostFeed() {
+export default function PostFeed() {
+    const { route } = useAuthenticator(context => [context.route]);
+    const { user, signOut } = useAuthenticator((context) => [context.user]);
+
+    return route === 'authenticated' ? <NewPostFeed /> : <Login />;
+}
+
+function Copyright() {
+    return (
+        <Typography variant="body2" color="text.secondary" align="center">
+            {'Copyright © '}
+            <Link color="inherit" href="/user/feed">
+                PixPlore : Explore your Intrests
+            </Link>{' '}
+            {new Date().getFullYear()}
+            {'.'}
+        </Typography>
+    );
+}
+
+function NewPostFeed() {
     const [searchBy, setSearchBy] = React.useState('');
-    const [profiles, setProfiles] = React.useState([]);
-    const [tempProfiles, setTempProfiles] = React.useState([]);
 
-    //   const url = "https://tutorial4-api.herokuapp.com/api/users/";
-    // const url = "https://raw.githubusercontent.com/11fenil11/DataAboutProject/main/dataPostss";
-    //   const url = "https://raw.githubusercontent.com/11fenil11/DataAboutProject/main/dbposts";
-    // const url = "https://raw.githubusercontent.com/11fenil11/DataAboutProject/main/dataProfiles";
-    const url = "https://raw.githubusercontent.com/11fenil11/DataAboutProject/main/dbpostdata";
+
+    const url = "https://fmzdy563bcs2aw5jo6shmau3ty0coqao.lambda-url.us-east-1.on.aws/";
+    var [links, setLinks] = useState([]);
     useEffect(() => {
-        fetchAllData();
-    }, []);
-
-    // var allData = [];
-
-    const fetchAllData = () => {
-        axios.get(`${url}`)
+        axios.post(`${url}`, { interests: 'Mountain,Ocean' })
             .then((response) => {
-                const allData = response.data.data;
-                setProfiles(allData);
-                setTempProfiles(allData);
+                const allData = response.data;
+                console.log(allData.toString().split(","));
+                setLinks(allData.toString().split(","));
             })
             .catch(error => console.error(`Error: ${error}`));
-    }
+    }, []);
 
+    let navigate = useNavigate();
     const onSumbit = () => {
-        const newPosts = profiles.filter((profile) => profile.itemName.toLowerCase().indexOf(searchBy.toLowerCase()) > -1);
-        // setPosts(newPosts);
-        setTempProfiles(newPosts);
+        axios.post(`${url}`, { interests: searchBy })
+            .then((response) => {
+                const allData = response.data;
+                console.log(allData.toString().split(","));
+                setLinks(allData.toString().split(","));
+            })
+            .catch(error => console.error(`Error: ${error}`));
     }
 
     return (
         <Box sx={{ height: "100%", marginTop: "4%" }}>
             <Typography
-            component="h1"
-            variant="h2"
-            align="center"
-            color="text.primary"
-            gutterBottom
-          >
-            E X P L O R E 
-          </Typography>
+                component="h1"
+                variant="h2"
+                align="center"
+                color="text.primary"
+                gutterBottom
+            >
+                E X P L O R E
+            </Typography>
             <Box sx={{ height: "10%", display: 'flex', justifyContent: "center" }}>
-
-            
-                {/* <Grid container spacing={1} sx={{ height: "100%", width: "100%" ,justifyContent: "center" }}>
-                    <Grid item md={9} sx={{ marginLeft:'10%',height: "50%", width: "90%", marginTop: '1%' }}> */}
-                    <Grid>
+                <Grid>
                     <Grid>
                         <TextField
                             value={searchBy}
                             name="searchBy"
-                            // class="search"
                             id={searchBy}
                             onChange={(e) => setSearchBy(e?.target?.value)}
                             onKeyPress={event => {
@@ -67,21 +82,43 @@ function PostFeed() {
                                     onSumbit()
                                 }
                             }}
-                            label="Search By Item Name"
+                            label="Search By Feature Name"
                         />
                     </Grid>
-                    {/* <Grid item md={3} sx={{  width: "10%", height:'50%' }}>
-                        <Button variant="outlined" size='large' onClick={onSumbit}>Go</Button>
-                    </Grid> */}
                 </Grid>
             </Box>
 
             <Box sx={{ height: "90%" }}>
-                <Posts profiles={tempProfiles} />
-            </Box>
+                <Container sx={{ py: 1 }} maxWidth="md">
+                    <Grid container spacing={4}>
 
+
+                        {links.map((card) => (
+                            <Grid item key={card} xs={12} sm={6} md={4}>
+                                <Card
+                                    sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                                    onClick={() => navigate("/view/post")}
+                                >
+                                    <CardMedia
+                                        component="img"
+                                        image={card}
+                                        alt="random"
+                                    />
+                                </Card>
+                            </Grid>
+                        ))}
+                    </Grid>
+                </Container>
+            </Box>
+            <Typography
+                variant="subtitle1"
+                align="center"
+                color="text.secondary"
+                component="p"
+            >
+                Always Follow your dreams!
+            </Typography>
+            <Copyright />
         </Box>
     );
 }
-
-export default PostFeed;

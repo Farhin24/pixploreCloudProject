@@ -2,6 +2,40 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Recommended steps to avoid version issues.
+### delete node_modules and package-lock.json
+    
+`rm -rf node_modules`
+
+`rm -f package-lock.json`
+
+#### clean npm cache
+
+`npm cache clean --force`
+`npm install`
+
+## Required Libraries
+
+`npm install sweetalert2`
+
+`npm install react-router-dom`
+
+`npm i @aws-amplify/ui-react aws-amplify`
+
+`npm install -g @aws-amplify/cli@latest`
+
+`npm install @mui/material @emotion/react @emotion/styled --force`
+
+`npm install @mui/icons-material --force`
+
+`npm install @mui/lab --force`
+
+`npm install cors`
+
+`npm install express-favicon`
+
+`npm install axios`
+
 ## Available Scripts
 
 In the project directory, you can run:

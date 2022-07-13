@@ -65,7 +65,7 @@ export default function SignInSide() {
     user.authenticateUser(authDetails, {
       onSuccess: (data) => {
         console.log("onSuccess: ", data);
-        navigate("/user/feed");
+        navigate("/user/interest");
       },
       onFailure: (err) => {
         console.error("onFailure: ", err);
