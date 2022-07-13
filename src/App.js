@@ -13,6 +13,7 @@ import Feed from './Feed/feed.js';
 import PostFeed from './FeedPosts/PostFeed.js';
 import CreatePost from "./Posts/createPost";
 import UserProfile from "./userprofile/userProfile";
+import Interests from './Interests/interest';
 
 const SidebarLayout = () => (
   <>
@@ -33,7 +34,7 @@ function App() {
             <Route path="/feed/posts" element={<PostFeed />} />
             <Route path="/user/createpost" element={<CreatePost />} />
             <Route path="/user/profile" element={<UserProfile />} />
-
+            <Route path="/user/interest" element={<Interests />} />
           </Route>
 
           <Route path="/" element={<SignIn />} />

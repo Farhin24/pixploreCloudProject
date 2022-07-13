@@ -51,13 +51,7 @@ function CreatePost() {
       body: JSON.stringify('Hello from Lambda!'),
   };
 
-    axios.post("https://xqh1t1hyb4.execute-api.us-east-1.amazonaws.com/d1/pixploreimags/test.jpg", photo
-      ,{
-    headers: {
-          'Access-Control-Allow-Origin' : '*',
-          'Access-Control-Allow-Headers':'X-Api-Key',
-    }}
-    )
+    axios.put("https://xqh1t1hyb4.execute-api.us-east-1.amazonaws.com/d1/pixploreimags/tst.jpg", photo)
     .then((result)=>{
       console.log(result.data);
     })
