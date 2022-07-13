@@ -13,7 +13,21 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router";
 import ChatIcon from '@mui/icons-material/Chat';
 import AdbIcon from '@mui/icons-material/Adb';
+import { useAuthenticator } from '@aws-amplify/ui-react';
+import { Login } from "../components/Login";
+
+
 export default function Navbar() {
+  const { route } = useAuthenticator(context => [context.route]);
+  const {user, signOut} = useAuthenticator((context) => [context.user]);  
+  
+  return route === 'authenticated' ? <NewNavbar />: <></>;  
+}
+
+function NewNavbar() {
+
+  const {user, signOut} = useAuthenticator((context) => [context.user]);  
+
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -58,9 +72,13 @@ export default function Navbar() {
       <MenuItem onClick={() => {
         navigate("/user/profile")
       }}>User Profile</MenuItem>
-      <MenuItem onClick={() => {
-        navigate("/")
-      }}>Logout</MenuItem>
+      {/* <MenuItem onClick={
+        signOut
+       }>Logout</MenuItem> */}
+      <MenuItem>
+      <button onClick={signOut}>Sign out</button>
+      {/* <p>Notifications</p> */}
+      </MenuItem>
     </Menu>
   );
 
@@ -187,6 +205,12 @@ export default function Navbar() {
             >
               <MoreIcon />
             </IconButton>
+          </Box>
+          <Box>
+            {/* {user.username} */}
+          </Box>
+          <Box>
+            {/* <button onClick={signOut}>Sign out</button> */}
           </Box>
         </Toolbar>
       </AppBar>

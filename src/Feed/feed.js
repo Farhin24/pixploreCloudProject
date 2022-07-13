@@ -21,6 +21,11 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Navigate } from 'react-router-dom';
 import React, { useRef, useState, useEffect } from "react";
 import axios from 'axios';
+<<<<<<< HEAD
+=======
+import { useAuthenticator } from '@aws-amplify/ui-react';
+import { Login } from '../components/Login';
+>>>>>>> fenil-dev
 
 function Copyright() {
   return (
@@ -39,7 +44,19 @@ function Copyright() {
 
 const theme = createTheme();
 
+<<<<<<< HEAD
 export default function Album() {
+=======
+
+export default function Album(){
+  const { route } = useAuthenticator(context => [context.route]);
+  const {user, signOut} = useAuthenticator((context) => [context.user]);  
+  
+  return route === 'authenticated' ? <OldAlbum />: <Login />;
+}
+
+function OldAlbum()  {
+>>>>>>> fenil-dev
   var [links,setLinks] = useState([]);  
   let navigate = useNavigate();
   useEffect(()=>{
@@ -130,9 +147,7 @@ export default function Album() {
     </main>
       {/* Footer */ }
   <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
-    <Typography variant="h6" align="center" gutterBottom>
-      END
-    </Typography>
+    
     <Typography
       variant="subtitle1"
       align="center"

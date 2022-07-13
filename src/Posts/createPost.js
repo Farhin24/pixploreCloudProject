@@ -16,6 +16,11 @@ import Typography from "@mui/material/Typography";
 //app.use(cors());
 import { useState } from "react";
 import axios from "axios";
+<<<<<<< HEAD
+=======
+import { useAuthenticator } from '@aws-amplify/ui-react';
+import { Login } from "../components/Login";
+>>>>>>> fenil-dev
 
 const Input = styled("input")({
   display: "none",
@@ -34,7 +39,17 @@ function Copyright() {
     </Typography>
   );
 }
+<<<<<<< HEAD
 function CreatePost() {
+=======
+export default function CreatePost() {
+  const { route } = useAuthenticator(context => [context.route]);
+  const {user, signOut} = useAuthenticator((context) => [context.user]);  
+  
+  return route === 'authenticated' ? <NewCreatePost />: <Login />;  
+}
+function NewCreatePost() {
+>>>>>>> fenil-dev
 
   const [photo, setPhoto] = useState("");
 
@@ -126,10 +141,7 @@ function CreatePost() {
         </form>
       </Box>
       {/* Footer */}
-      <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
-        <Typography variant="h6" align="center" gutterBottom>
-          END
-        </Typography>
+      <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">        
         <Typography
           variant="subtitle1"
           align="center"
@@ -145,4 +157,3 @@ function CreatePost() {
   );
 }
 
-export default CreatePost;

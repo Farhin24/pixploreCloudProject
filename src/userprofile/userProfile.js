@@ -6,6 +6,8 @@ import Typography from "@mui/material/Typography";
 import Avatar from "react-avatar";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Link from "@mui/material/Link";
+import { useAuthenticator } from '@aws-amplify/ui-react';
+import { Login } from "../components/Login";
 
 function Copyright() {
   return (
@@ -20,7 +22,14 @@ function Copyright() {
   );
 }
 
-function UserProfile() {
+export default function UserProfile() {
+  const { route } = useAuthenticator(context => [context.route]);
+  const {user, signOut} = useAuthenticator((context) => [context.user]);  
+  
+  return route === 'authenticated' ? <NewUserProfile />: <Login />;  
+}
+
+function NewUserProfile() {
   return (
     <>
       <Box component="section" py={{ xs: 8, sm: 12 }}>
@@ -89,10 +98,7 @@ function UserProfile() {
         </Container>
       </Box>
 
-      <Box sx={{ bgcolor: "background.paper", p: 2 }} component="footer">
-        <Typography variant="h6" align="center" gutterBottom>
-          END
-        </Typography>
+      <Box sx={{ bgcolor: "background.paper", p: 2 }} component="footer">        
         <Typography
           variant="subtitle1"
           align="center"
@@ -106,5 +112,3 @@ function UserProfile() {
     </>
   );
 }
-
-export default UserProfile;
