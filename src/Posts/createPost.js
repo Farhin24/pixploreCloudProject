@@ -41,15 +41,8 @@ function CreatePost() {
   const onSubmit = (event) => {
     event.preventDefault();
     
-    const response = {
-      statusCode: 200,
-      headers: {
-          "Access-Control-Allow-Headers" : "Content-Type",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "PUT"
-      },
-      body: JSON.stringify('Hello from Lambda!'),
-  };
+    
+  
 
     axios.put("https://xqh1t1hyb4.execute-api.us-east-1.amazonaws.com/d1/pixploreimags/tst.jpg", photo)
     .then((result)=>{
