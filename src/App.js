@@ -9,11 +9,8 @@ import Feed from './Feed/feed.js';
 import PostFeed from './FeedPosts/PostFeed.js';
 import CreatePost from "./Posts/createPost";
 import UserProfile from "./userprofile/userProfile";
-<<<<<<< HEAD
-=======
 import { useAuthenticator } from '@aws-amplify/ui-react';
 
->>>>>>> fenil-dev
 import Interests from './Interests/interest';
 
 const SidebarLayout = () => (
@@ -30,26 +27,6 @@ function MyRoutes() {
   return (
     <BrowserRouter>
 
-<<<<<<< HEAD
-    <Router>
-      <div className='container'>
-        <Routes>
-          <Route element={<SidebarLayout />}>
-            <Route path="/user/feed" element={<Feed />} />
-            <Route path="/view/post" element={<ViewPost />} />
-            <Route path="/create/post" element={<CreatePost />} />
-            <Route path="/feed/posts" element={<PostFeed />} />
-            <Route path="/user/createpost" element={<CreatePost />} />
-            <Route path="/user/profile" element={<UserProfile />} />
-            <Route path="/user/interest" element={<Interests />} />
-          </Route>
-
-          <Route path="/" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
-        </Routes>
-      </div>
-    </Router>
-=======
       {/* <Router> */}
       {/* {route === 'authenticated'? <h1>{user.username}</h1>: "No"} */}
         <div className='container'>
@@ -66,7 +43,6 @@ function MyRoutes() {
             <Route path="/" element={<Login />} />
             {/* <Route path="/" element={<Layout />} /> */}
 {/* 
->>>>>>> fenil-dev
 
             <Route path="/" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} /> */}

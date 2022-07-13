@@ -9,8 +9,6 @@ import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import SendIcon from "@mui/icons-material/Send";
 import axios from "axios";
-<<<<<<< HEAD
-=======
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { Login } from "../components/Login";
 
@@ -21,7 +19,6 @@ export default function Interests() {
   
   return route === 'authenticated' ? <NewInterests />: <Login />;  
 }
->>>>>>> fenil-dev
 
 function Copyright() {
   return (
@@ -36,11 +33,7 @@ function Copyright() {
   );
 }
 
-<<<<<<< HEAD
-function Interests() {
-=======
 function NewInterests() {
->>>>>>> fenil-dev
   const [data, setData] = useState('');
 
   useEffect(() => {
@@ -129,8 +122,3 @@ function NewInterests() {
     </>
   );
 }
-<<<<<<< HEAD
-
-export default Interests;
-=======
->>>>>>> fenil-dev

@@ -7,9 +7,6 @@ import Card from '@mui/material/Card';
 import { useNavigate } from "react-router-dom";
 import CardMedia from '@mui/material/CardMedia';
 import Container from '@mui/material/Container';
-<<<<<<< HEAD
-function PostFeed() {
-=======
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { Login } from "../components/Login";
 import Link from '@mui/material/Link';
@@ -35,7 +32,6 @@ function Copyright() {
 }
 
 function NewPostFeed() {
->>>>>>> fenil-dev
     const [searchBy, setSearchBy] = React.useState('');
 
 
@@ -43,20 +39,6 @@ function NewPostFeed() {
     var [links, setLinks] = useState([]);
     useEffect(() => {
         axios.post(`${url}`, { interests: 'Mountain,Ocean' })
-<<<<<<< HEAD
-        .then((response) => {
-            const allData = response.data;
-            console.log(allData.toString().split(","));
-            setLinks(allData.toString().split(","));
-        })
-        .catch(error => console.error(`Error: ${error}`));
-    }, []);
-
-    let navigate = useNavigate();
-    const onSumbit = () => {
-        axios.post(`${url}`, { interests: searchBy })
-=======
->>>>>>> fenil-dev
             .then((response) => {
                 const allData = response.data;
                 console.log(allData.toString().split(","));
@@ -65,8 +47,6 @@ function NewPostFeed() {
             .catch(error => console.error(`Error: ${error}`));
     }, []);
 
-<<<<<<< HEAD
-=======
     let navigate = useNavigate();
     const onSumbit = () => {
         axios.post(`${url}`, { interests: searchBy })
@@ -78,7 +58,6 @@ function NewPostFeed() {
             .catch(error => console.error(`Error: ${error}`));
     }
 
->>>>>>> fenil-dev
     return (
         <Box sx={{ height: "100%", marginTop: "4%" }}>
             <Typography
@@ -112,28 +91,6 @@ function NewPostFeed() {
             <Box sx={{ height: "90%" }}>
                 <Container sx={{ py: 1 }} maxWidth="md">
                     <Grid container spacing={4}>
-<<<<<<< HEAD
-
-
-                        {links.map((card) => (
-                            <Grid item key={card} xs={12} sm={6} md={4}>
-                                <Card
-                                    sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                                    onClick={() => navigate("/view/post")}
-                                >
-                                    <CardMedia
-                                        component="img"
-                                        image={card}
-                                        alt="random"
-                                    />
-                                </Card>
-                            </Grid>
-                        ))}
-                    </Grid>
-                </Container>
-            </Box>
-=======
->>>>>>> fenil-dev
 
 
                         {links.map((card) => (
