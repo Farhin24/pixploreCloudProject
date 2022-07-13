@@ -10,16 +10,6 @@ import { useNavigate } from "react-router-dom";
 import SendIcon from "@mui/icons-material/Send";
 import axios from "axios";
 import { useAuthenticator } from '@aws-amplify/ui-react';
-import { Login } from "../components/Login";
-
-
-export default function Interests() {
-  const { route } = useAuthenticator(context => [context.route]);
-  const {user, signOut} = useAuthenticator((context) => [context.user]);  
-  
-  return route === 'authenticated' ? <NewInterests />: <Login />;  
-}
-
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
@@ -33,19 +23,21 @@ function Copyright() {
   );
 }
 
-function NewInterests() {
+function Interests() {
   const [data, setData] = useState('');
-
+  const {user, signOut} = useAuthenticator((context) => [context.user]);
   useEffect(() => {
-    handleSubmit()
+    
   }, []);
 
   const handleSubmit = async() => {
+   
     const newdata=new FormData();
     newdata.append("interests",data)
       // make axios post request
+      
        axios.post("https://nlhhrt7ol4eniujfzhl743alz40zdtmw.lambda-url.us-east-1.on.aws/",
-        {newdata:'farhin'}
+        {user_id: user.username , interests: newdata}
       )
       .then((res)=>{
         console.log(res.data)
@@ -56,6 +48,7 @@ function NewInterests() {
   };
   
   const handleChange = (event) => {
+    console.log("hi" + user.username);
     setData({
       ...data,
       [event.target.name]: event.target.value
@@ -85,7 +78,7 @@ function NewInterests() {
             marginLeft: "50px",
             marginTop: "50px",
           }}
-          value={data}
+          value="data"
           onChange={handleChange}
         >
           <FavoriteIcon />
@@ -122,3 +115,5 @@ function NewInterests() {
     </>
   );
 }
+
+export default Interests;

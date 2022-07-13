@@ -10,7 +10,6 @@ import PostFeed from './FeedPosts/PostFeed.js';
 import CreatePost from "./Posts/createPost";
 import UserProfile from "./userprofile/userProfile";
 import { useAuthenticator } from '@aws-amplify/ui-react';
-
 import Interests from './Interests/interest';
 
 const SidebarLayout = () => (

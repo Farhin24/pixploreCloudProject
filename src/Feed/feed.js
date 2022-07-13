@@ -44,23 +44,35 @@ const theme = createTheme();
 
 export default function Album(){
   const { route } = useAuthenticator(context => [context.route]);
-  const {user, signOut} = useAuthenticator((context) => [context.user]);  
+    
   
   return route === 'authenticated' ? <OldAlbum />: <Login />;
 }
 
 function OldAlbum()  {
+  const {user, signOut} = useAuthenticator((context) => [context.user]);
   var [links,setLinks] = useState([]);  
   let navigate = useNavigate();
   useEffect(()=>{
-    axios.post('https://fmzdy563bcs2aw5jo6shmau3ty0coqao.lambda-url.us-east-1.on.aws/',{interests:"Mountain,Road,Ocean" }) 
-    .then(function (response) {
-      console.log(response.data.toString().split(","))
-      setLinks(response.data.toString().split(","));
+    console.log(user.username);
+    axios.post('https://grzhgfcds4zdkywxrx6lnwkzyu0lvego.lambda-url.us-east-1.on.aws/',{
+      user_id: user.username
+     }).then(function (response) {
+      console.log(response.data.toString());
+      axios.post('https://fmzdy563bcs2aw5jo6shmau3ty0coqao.lambda-url.us-east-1.on.aws/',{interests:response.data.toString() }) 
+    .then(function (response1) {
+      console.log(response1.data.toString().split(","))
+      setLinks(response1.data.toString().split(","));
    })
    .catch(function (error) {
      console.log(error);
    })
+      
+   })
+   .catch(function (error) {
+     console.log(error);
+   })
+
     
   },[]);
 
