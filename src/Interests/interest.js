@@ -26,18 +26,18 @@ function Copyright() {
 function Interests() {
   const [data, setData] = useState('');
   const {user, signOut} = useAuthenticator((context) => [context.user]);
+  let interestsObj = ""
   useEffect(() => {
     
   }, []);
 
   const handleSubmit = async() => {
    
-    const newdata=new FormData();
-    newdata.append("interests",data)
+    
       // make axios post request
       
        axios.post("https://nlhhrt7ol4eniujfzhl743alz40zdtmw.lambda-url.us-east-1.on.aws/",
-        {user_id: user.username , interests: newdata}
+        {user_id: user.username , interests: interestsObj.slice(0,interestsObj.length-1)}
       )
       .then((res)=>{
         console.log(res.data)
@@ -45,14 +45,15 @@ function Interests() {
     .catch((error)=> {
       console.log(error)
     });
+    navigate("/user/feed")
   };
   
   const handleChange = (event) => {
     console.log("hi" + user.username);
-    setData({
-      ...data,
-      [event.target.name]: event.target.value
-    });
+    interestsObj=interestsObj+event.target.value+","
+  
+    console.log(interestsObj)
+ 
   }
   const navigate = useNavigate();
   return (
@@ -68,7 +69,9 @@ function Interests() {
         >
           What are you interested In?
         </Typography>
-        <form onSubmit={handleSubmit}>
+        <form >
+          <table>
+            <tr><td>
         <Fab
           color="secondary"
           aria-label="like"
@@ -78,12 +81,121 @@ function Interests() {
             marginLeft: "50px",
             marginTop: "50px",
           }}
-          value="data"
-          onChange={handleChange}
-        >
+          value="Landscape"
+          onClick={handleChange}
+        >Landscape
           <FavoriteIcon />
          
-        </Fab>
+        </Fab></td><td>
+        <Fab
+          color="secondary"
+          aria-label="like"
+          style={{
+            height: "60px",
+            width: "120px",
+            marginLeft: "50px",
+            marginTop: "50px",
+          }}
+          value="Sea"
+          onClick={handleChange}
+        >Sea
+          <FavoriteIcon />
+         
+        </Fab></td><td>
+        <Fab
+          color="secondary"
+          aria-label="like"
+          style={{
+            height: "60px",
+            width: "120px",
+            marginLeft: "50px",
+            marginTop: "50px",
+          }}
+          value="Plant"
+          onClick={handleChange}
+        >Plant
+          <FavoriteIcon />
+         
+        </Fab></td><td>
+        <Fab
+          color="secondary"
+          aria-label="like"
+          style={{
+            height: "60px",
+            width: "120px",
+            marginLeft: "50px",
+            marginTop: "50px",
+          }}
+          value="Mountain"
+          onClick={handleChange}
+        >Mountain
+          <FavoriteIcon />
+         
+        </Fab></td></tr>
+        <tr><td>
+        <Fab
+          color="secondary"
+          aria-label="like"
+          style={{
+            height: "60px",
+            width: "120px",
+            marginLeft: "50px",
+            marginTop: "50px",
+          }}
+          value="Building"
+          onClick={handleChange}
+        >Building
+          <FavoriteIcon />
+         
+        </Fab></td><td>
+        <Fab
+          color="secondary"
+          aria-label="like"
+          style={{
+            height: "60px",
+            width: "120px",
+            marginLeft: "50px",
+            marginTop: "50px",
+          }}
+          value="Person"
+          onClick={handleChange}
+        >Person
+          <FavoriteIcon />
+         
+        </Fab></td><td>
+        <Fab
+          color="secondary"
+          aria-label="like"
+          style={{
+            height: "60px",
+            width: "120px",
+            marginLeft: "50px",
+            marginTop: "50px",
+          }}
+          value="Nature"
+          onClick={handleChange}
+        >Nature
+          <FavoriteIcon />
+         
+        </Fab></td><td>
+        <Fab
+          color="secondary"
+          aria-label="like"
+          style={{
+            height: "60px",
+            width: "120px",
+            marginLeft: "50px",
+            marginTop: "50px",
+          }}
+          value="Meal"
+          onClick={handleChange}
+        >Meal
+          <FavoriteIcon />
+         
+        </Fab></td></tr>
+        </table>
+        
+       
 
       
       <Button
@@ -91,7 +203,8 @@ function Interests() {
         color="success"
         endIcon={<SendIcon />}
         style={{ marginLeft: "650px", marginTop: "50px" }}
-        onClick={() => navigate("/user/feed")}
+        onClick={handleSubmit}
+        
       
       >
         CONTINUE
