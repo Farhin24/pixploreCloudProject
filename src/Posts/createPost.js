@@ -18,6 +18,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { Login } from "../components/Login";
+import FileBase64 from 'react-file-base64';
 
 const Input = styled("input")({
   display: "none",
@@ -38,32 +39,46 @@ function Copyright() {
 }
 export default function CreatePost() {
   const { route } = useAuthenticator(context => [context.route]);
-  const {user, signOut} = useAuthenticator((context) => [context.user]);  
-  
-  return route === 'authenticated' ? <NewCreatePost />: <Login />;  
+  const { user, signOut } = useAuthenticator((context) => [context.user]);
+
+  return route === 'authenticated' ? <NewCreatePost /> : <Login />;
 }
 function NewCreatePost() {
+  const { user, signOut } = useAuthenticator((context) => [context.user]);
 
-  const [photo, setPhoto] = useState("");
+  const [photo, setPhoto] = useState([]);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
   const onSubmit = (event) => {
     event.preventDefault();
-    
-    
-  
+    console.log(JSON.stringify(photo["selectedFile"]));
 
-    axios.put("https://rq4aq9pf86.execute-api.us-east-1.amazonaws.com/dev1/", photo)
-    .then((result)=>{
-      console.log(result.data);
-    })
-    .catch((err)=>
-    {
-      console.error(err);
-    });
+    axios.post("https://756dhuerdlh436y77rnhhovfzu0ssebb.lambda-url.us-east-1.on.aws/", {
+      file: photo["selectedFile"],
+      user_id: user.username,
+      title: title,
+      description: description
+    },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        }
+      }
+    )
+      .then((result) => {
+        console.log(result.data);
+        console.log(result.data.uploadResult.Location);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
  
   return (
     <>
+
       <Box
         sx={{
           boxShadow: 3,
@@ -83,6 +98,9 @@ function NewCreatePost() {
             label="Enter Image Title"
             variant="outlined"
             sx={{ width: "40%" }}
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
           />
           <br />
           <TextField
@@ -91,11 +109,14 @@ function NewCreatePost() {
             multiline
             maxRows={4}
             sx={{ width: "40%" }}
+            onChange={(e) => {
+              setDescription(e.target.value);
+            }}
           />
-          <br />
+          <br />          
+          <FileBase64 type="file" multiple={false} onDone={({ base64 }) => setPhoto({ selectedFile: base64 })} />
           <Stack direction="row" alignItems="center" spacing={2}>
 
-          <input type="file" id= "abc" />
             <label htmlFor="contained-button-file">
 
               <Button variant="contained" component="span" onClick={onSubmit}>
@@ -111,19 +132,18 @@ function NewCreatePost() {
                 flexDirection: "column",
                 margin: "2% auto 5% auto",
               }}
-            >
+            >              
               <CardMedia
                 component="img"
-                image="https://source.unsplash.com/random"
-                alt="random"
-                height={400}
+                image={photo["selectedFile"]}
+                alt="random"                
               />
             </Card>
           </Container>
         </form>
       </Box>
       {/* Footer */}
-      <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">        
+      <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
         <Typography
           variant="subtitle1"
           align="center"

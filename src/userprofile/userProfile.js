@@ -146,7 +146,7 @@ function NewUserProfile() {
 
       </Box>
 
-      <Box sx={{ bgcolor: "background.paper", p: 2 }} component="footer">        
+      <Box sx={{ bgcolor: "background.paper", p: 2 }} component="footer">
         <Typography
           variant="subtitle1"
           align="center"
