@@ -15,7 +15,7 @@ import ChatIcon from '@mui/icons-material/Chat';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { Login } from "../components/Login";
-
+import { Button, CardActionArea, CardActions } from '@mui/material';
 
 export default function Navbar() {
   const { route } = useAuthenticator(context => [context.route]);
@@ -150,21 +150,24 @@ function NewNavbar() {
           </Typography>
 
           <Box sx={{ flexGrow: 1, textAlign: "center", display: "flex", marginLeft:"32%"}}>
-            <Typography
+          <Button><Typography
               variant="h6"
               component="div"
               sx={{
                 display: { xs: "none", sm: "block" },
                 cursor: "pointer",
                 fontWeight: "bold",
+                color:"white"
               }}
               onClick={() => {
                 navigate('/user/feed')
               }}
             >
+              
               FEED
-            </Typography><span style={{ padding: "20px" }} />
-            <Typography
+            </Typography></Button> 
+            <span style={{ padding: "20px" }} />
+            <Button> <Typography
               variant="h6"
 
               component="div"
@@ -172,13 +175,14 @@ function NewNavbar() {
                 display: { xs: "none", sm: "block" },
                 cursor: "pointer",
                 fontWeight: "bold",
+                color:"white"
               }}
               onClick={() => {
                 navigate('/feed/posts')
               }}
             >
               EXPLORE
-            </Typography>
+            </Typography></Button>
             </Box>
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             
