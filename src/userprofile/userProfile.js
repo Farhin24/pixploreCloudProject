@@ -8,6 +8,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Link from "@mui/material/Link";
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { Login } from "../components/Login";
+import { useNavigate } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -24,12 +25,13 @@ function Copyright() {
 
 export default function UserProfile() {
   const { route } = useAuthenticator(context => [context.route]);
-  const {user, signOut} = useAuthenticator((context) => [context.user]);  
-  
-  return route === 'authenticated' ? <NewUserProfile />: <Login />;  
+  const { user, signOut } = useAuthenticator((context) => [context.user]);
+
+  return route === 'authenticated' ? <NewUserProfile /> : <Login />;
 }
 
 function NewUserProfile() {
+  const navigate = useNavigate();
   return (
     <>
       <Box component="section" py={{ xs: 8, sm: 12 }}>
@@ -81,7 +83,10 @@ function NewUserProfile() {
                 </Typography>
               </Grid>
             </Grid>{" "}
-            <Button variant="contained" style={{ margin: "-3% -12% 5% 20%" }}>
+            <Button variant="contained" style={{ margin: "-3% -12% 5% 20%" }}
+              onClick={() => {
+                navigate('/user/interest')
+              }}>
               Change Interests
             </Button>
             <Button variant="contained" style={{ margin: "-3% 10% 5% 20%" }}>
@@ -98,7 +103,7 @@ function NewUserProfile() {
         </Container>
       </Box>
 
-      <Box sx={{ bgcolor: "background.paper", p: 2 }} component="footer">        
+      <Box sx={{ bgcolor: "background.paper", p: 2 }} component="footer">
         <Typography
           variant="subtitle1"
           align="center"
