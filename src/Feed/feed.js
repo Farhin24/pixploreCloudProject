@@ -133,39 +133,39 @@ function OldAlbum() {
             {links.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={4}>
                 <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                  
-                  onClick={() => { navigate("/view/post",{ state:{ id : card}})}}
-              >
-                <CardMedia
-                  component="img"
-                  image={card}
-                  alt="random"
-                />
-                {/* <CardActions>
-                  <Button size="small">View</Button>
-                  <Button size="small">Edit</Button>
-                </CardActions> */}
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
-    </main>
-      {/* Footer */ }
-  <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
+                  sx={{
+                    height: '100%', display: 'flex', flexDirection: 'column', maxWidth: "auto",
+                    maxHeight: "auto",
+                  }}
 
-    <Typography
-      variant="subtitle1"
-      align="center"
-      color="text.secondary"
-      component="p"
-    >
-      Always Follow your dreams!
-    </Typography>
-    <Copyright />
-  </Box>
-  {/* End footer */ }
+                  onClick={() => { navigate("/view/post", { state: { id: card } }) }}
+                >
+                  <CardMedia
+                    height={"200"}
+                    component="img"
+                    image={card}
+                    alt="random"
+                  />
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </main>
+      {/* Footer */}
+      <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
+
+        <Typography
+          variant="subtitle1"
+          align="center"
+          color="text.secondary"
+          component="p"
+        >
+          Always Follow your dreams!
+        </Typography>
+        <Copyright />
+      </Box>
+      {/* End footer */}
     </ThemeProvider >
   );
 }

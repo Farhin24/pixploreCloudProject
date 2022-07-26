@@ -96,10 +96,14 @@ function NewPostFeed() {
                         {links.map((card) => (
                             <Grid item key={card} xs={12} sm={6} md={4}>
                                 <Card
-                                    sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                                    onClick={() => navigate("/view/post", { state:{ id : card}})}
+                                    sx={{
+                                        height: '100%', display: 'flex', flexDirection: 'column', maxWidth: "auto",
+                                        maxHeight: "auto",
+                                    }}
+                                    onClick={() => navigate("/view/post", { state: { id: card } })}
                                 >
                                     <CardMedia
+                                        height={"200"}
                                         component="img"
                                         image={card}
                                         alt="random"

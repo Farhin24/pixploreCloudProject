@@ -12,6 +12,7 @@ import Link from "@mui/material/Link";
 import { useLocation } from "react-router-dom";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { saveAs } from 'file-saver'
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
@@ -33,18 +34,31 @@ export default function View() {
   return route === 'authenticated' ? <Newview /> : <Login />;
 }
 const Newview = () => {
+  const downloadImage = () => {
+    saveAs(location.state.id, tit +".jpg") // Put your image url here.
+  }
+
+  
   let navigate = useNavigate();
   const location = useLocation();
   console.log(location.state.id);
   const { user, signOut } = useAuthenticator((context) => [context.user]);
-
-
+  var [dest,setDesc] = useState();
+  var [tit,setTit] = useState();
   useEffect(() => {
     console.log(user.username);
     axios.post('https://ggvb5ukil4fp2yfkcdvz4iyzfm0phqpk.lambda-url.us-east-1.on.aws/', {
       ImgId: location.state.id
     }).then(function (response) {
-      console.log(response.data);
+      var desc = new Map(Object.entries(response.data.description));
+      var title = new Map(Object.entries(response.data.title))
+      
+      
+      setTit(title.get('S').toString());
+      setDesc(desc.get('S').toString());
+      
+      console.log(tit);
+      console.log(dest);
     })
       .catch(function (error) {
         console.log(error);
@@ -66,11 +80,10 @@ const Newview = () => {
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-              Lizard
+              {tit}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Lizards are a widespread group of squamate reptiles, with over 6,000
-              species, ranging across all continents except Antarctica
+              {dest}
             </Typography>
           </CardContent>
         </CardActionArea>
@@ -85,6 +98,8 @@ const Newview = () => {
           } >
             SAVE
           </Button>
+          <Button onClick={downloadImage}>Download!</Button> 
+          {/* <a href={location.state.id} download="proposed_file_name">Download</a> */}
         </CardActions>
       </Card>
       <Box sx={{ bgcolor: "background.paper", p: 2 }} component="footer">

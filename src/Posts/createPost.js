@@ -19,7 +19,7 @@ import axios from "axios";
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { Login } from "../components/Login";
 import FileBase64 from 'react-file-base64';
-
+import { useNavigate } from "react-router-dom";
 const Input = styled("input")({
   display: "none",
 });
@@ -49,7 +49,7 @@ function NewCreatePost() {
   const [photo, setPhoto] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-
+  const navigate = useNavigate();
   const onSubmit = (event) => {
     event.preventDefault();
     console.log(JSON.stringify(photo["selectedFile"]));
@@ -73,7 +73,9 @@ function NewCreatePost() {
       })
       .catch((err) => {
         console.error(err);
-      });
+      }).finally(
+        navigate("/user/feed")
+      );
   };
  
   return (
