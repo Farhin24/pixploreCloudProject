@@ -29,42 +29,56 @@ function Copyright() {
 }
 
 export default function UserProfile() {
-  
+
 
   const { route } = useAuthenticator(context => [context.route]);
-  
-  return route === 'authenticated' ? <NewUserProfile />: <Login />;  
+
+  return route === 'authenticated' ? <NewUserProfile /> : <Login />;
 }
 
 function NewUserProfile() {
-  
 
-  const {user, signOut} = useAuthenticator((context) => [context.user]);  
-  
-  var [links,setLinks] = useState([]);  
+
+  const { user, signOut } = useAuthenticator((context) => [context.user]);
+
+  var [links, setLinks] = useState([]);
   let navigate = useNavigate();
-  useEffect(()=>{
-    console.log(user.username);
-    axios.post('https://grzhgfcds4zdkywxrx6lnwkzyu0lvego.lambda-url.us-east-1.on.aws/',{
-      user_id: user.username
-     }).then(function (response) {
-      console.log(response.data.toString());
-      axios.post('https://fmzdy563bcs2aw5jo6shmau3ty0coqao.lambda-url.us-east-1.on.aws/',{interests:response.data.toString() }) 
-    .then(function (response1) {
-      console.log(response1.data.toString().split(","))
-      setLinks(response1.data.toString().split(","));
-   })
-   .catch(function (error) {
-     console.log(error);
-   })
-      
-   })
-   .catch(function (error) {
-     console.log(error);
-   })
+  var [name,setName] = useState();
+  var [desc,setDesc] = useState();
+  useEffect(() => {
 
     
-  },[]);
+    axios.post("https://3uzkrjxuq63ffbofbclckhxeyi0vbclk.lambda-url.us-east-1.on.aws/", { user_id: user.username }).then(function (response) {
+      
+      console.log(response.data)
+      var name = new Map(Object.entries(response.data.Item.user_name));
+      var desc = new Map(Object.entries(response.data.Item.profile_desc))
+      
+      
+      setName(name.get('S').toString());
+      setDesc(desc.get('S').toString());
+      
+      console.log(name);
+      console.log(desc);
+
+    }).catch(function (error) {
+      console.log(error);
+    })
+
+
+    console.log(user.username);
+    axios.post('https://erg3iscqadlhtqxlkukf3hn5ym0roies.lambda-url.us-east-1.on.aws/', {
+      user_id: user.username
+    }).then(function (response) {
+      console.log(response.data.toString());
+      setLinks(response.data.toString().split(","));
+    })
+      .catch(function (error) {
+        console.log(error);
+      })
+
+
+  }, []);
   return (
     <>
       <Box component="section" py={{ xs: 8, sm: 12 }}>
@@ -79,10 +93,10 @@ function NewUserProfile() {
             }}
           >
             <Avatar
-              githubHandle="aman-txt"
+              githubHandle={name}
               size={150}
               round="90px"
-              style={{ marginTop: "60px", marginLeft: "180px" }}
+              style={{ marginTop: "6%", marginLeft: "20%" }}
             />
             <Grid container justifyContent="center" py={6}>
               <Grid item xs={12} md={7} mx={{ xs: "auto", sm: 6, md: 1 }}>
@@ -92,21 +106,18 @@ function NewUserProfile() {
                   alignItems="center"
                   mb={1}
                 >
-                  <Typography variant="h3">Aman Patel</Typography>
+                  <Typography variant="h3">{name}</Typography>
                 </Box>
-               
+
                 <Typography variant="body1" fontWeight="light" color="text">
-                  An artist of considerable range, Chet Faker — the name taken
-                  by Melbourne-raised, Brooklyn-based Nick Murphy — writes,
-                  performs and records all of his own music, giving it a warm,
-                  intimate feel with a solid groove structure. <br />
+                  {desc} <br />
                 </Typography>
               </Grid>
             </Grid>{" "}
-            <Button variant="contained" onClick={()=> navigate("/user/interest")} style={{ margin: "-3% -12% 5% 20%" }}>
-              Change Interests
+            <Button variant="contained" onClick={() => navigate("/user/interest")} style={{ margin: "-3% -12% 5% 20%" }}>
+              Edit Profile
             </Button>
-            <Button variant="contained" onClick={()=> navigate("/user/saved")} style={{ margin: "-3% -12% 5% 20%" }}>
+            <Button variant="contained" onClick={() => navigate("/user/saved")} style={{ margin: "-3% -12% 5% 20%" }}>
               Saved Posts
             </Button>
           </Box>
@@ -116,30 +127,30 @@ function NewUserProfile() {
 
 
         <Container sx={{ py: 1 }} maxWidth="md">
-        {/* End hero unit */}
-        <Grid container spacing={4}>
-          
-          
-          {links.map((card) => (
-            <Grid item key={card} xs={12} sm={6} md={4}>
-              <Card
-                sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                onClick={()=> navigate("/view/post")}
-              >
-                <CardMedia
-                  component="img"
-                  image={card}
-                  alt="random"
-                />
-                {/* <CardActions>
+          {/* End hero unit */}
+          <Grid container spacing={4}>
+
+
+            {links.map((card) => (
+              <Grid item key={card} xs={12} sm={6} md={4}>
+                <Card
+                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                  onClick={() => navigate("/view/post", { state: { id: card } })}
+                >
+                  <CardMedia
+                    component="img"
+                    image={card}
+                    alt="random"
+                  />
+                  {/* <CardActions>
                   <Button size="small">View</Button>
                   <Button size="small">Edit</Button>
                 </CardActions> */}
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
 
 
 
