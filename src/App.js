@@ -11,6 +11,7 @@ import CreatePost from "./Posts/createPost";
 import UserProfile from "./userprofile/userProfile";
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import Interests from './Interests/interest';
+import Saved from './userprofile/saved';
 
 const SidebarLayout = () => (
   <>
@@ -38,6 +39,8 @@ function MyRoutes() {
               <Route path="/user/createpost" element={<CreatePost />} />
               <Route path="/user/profile" element={<UserProfile />} />
               <Route path="/user/interest" element={<Interests />} />
+              <Route path="/user/saved" element={<Saved />} />
+              
             </Route>
             <Route path="/" element={<Login />} />
             {/* <Route path="/" element={<Layout />} /> */}

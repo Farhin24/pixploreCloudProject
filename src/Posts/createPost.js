@@ -52,7 +52,7 @@ function NewCreatePost() {
     
   
 
-    axios.put("https://xqh1t1hyb4.execute-api.us-east-1.amazonaws.com/d1/pixploreimags/tst.jpg", photo)
+    axios.put("https://rq4aq9pf86.execute-api.us-east-1.amazonaws.com/dev1/", photo)
     .then((result)=>{
       console.log(result.data);
     })
@@ -61,7 +61,7 @@ function NewCreatePost() {
       console.error(err);
     });
   };
-
+ 
   return (
     <>
       <Box
@@ -73,7 +73,7 @@ function NewCreatePost() {
           borderRadius: 4,
         }}
       >
-        <form method="post">
+        <form>
           <label className="label">
             Choose an image to upload from your system
           </label>
@@ -95,18 +95,7 @@ function NewCreatePost() {
           <br />
           <Stack direction="row" alignItems="center" spacing={2}>
 
-            <label htmlFor="photo">
-              <Input accept="image/*" id="photo" type="file" value={photo}
-                onChange={(event) => setPhoto(event.target.value)}
-              />
-              <IconButton
-                color="primary"
-                aria-label="upload picture"
-                component="span"
-              >
-                <PhotoCamera />
-              </IconButton>
-            </label>
+          <input type="file" id= "abc" />
             <label htmlFor="contained-button-file">
 
               <Button variant="contained" component="span" onClick={onSubmit}>

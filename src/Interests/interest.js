@@ -50,9 +50,9 @@ function Interests() {
   
   const handleChange = (event) => {
     console.log("hi" + user.username);
-    interestsObj=interestsObj+event.target.value+","
+    interestsObj=interestsObj+event.target.value.toString()+","
   
-    console.log(interestsObj)
+    console.log(interestsObj.toString())
  
   }
   const navigate = useNavigate();
