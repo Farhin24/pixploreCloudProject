@@ -12,6 +12,7 @@ import Link from "@mui/material/Link";
 import { useLocation } from "react-router-dom";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { saveAs } from 'file-saver'
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
@@ -33,6 +34,11 @@ export default function View() {
   return route === 'authenticated' ? <Newview /> : <Login />;
 }
 const Newview = () => {
+  const downloadImage = () => {
+    saveAs(location.state.id, tit +".jpg") // Put your image url here.
+  }
+
+  
   let navigate = useNavigate();
   const location = useLocation();
   console.log(location.state.id);
@@ -92,6 +98,8 @@ const Newview = () => {
           } >
             SAVE
           </Button>
+          <Button onClick={downloadImage}>Download!</Button> 
+          {/* <a href={location.state.id} download="proposed_file_name">Download</a> */}
         </CardActions>
       </Card>
       <Box sx={{ bgcolor: "background.paper", p: 2 }} component="footer">
