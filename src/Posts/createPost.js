@@ -75,7 +75,7 @@ function NewCreatePost() {
         console.error(err);
       });
   };
-
+ 
   return (
     <>
 
@@ -88,7 +88,7 @@ function NewCreatePost() {
           borderRadius: 4,
         }}
       >
-        <form method="post">
+        <form>
           <label className="label">
             Choose an image to upload from your system
           </label>
