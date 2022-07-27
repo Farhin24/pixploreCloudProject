@@ -2,6 +2,11 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+
+## The Lambda functions code is in LambdaFunctionAWS FOlder.
+
+## CLoud Formation templates are in CloudFormationTemplates folder.
+
 ## Recommended steps to avoid version issues.
 ### delete node_modules and package-lock.json
     
@@ -102,3 +107,19 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+### References
+
+[1]	“React templates,” Mui.com. [Online]. Available: https://mui.com/material-ui/getting-started/templates/. [Accessed: 27-Jul-2022].
+
+[2]	“Get HTTP request body data using Node.js,” Get HTTP request body data using Node.js. [Online]. Available: https://nodejs.dev/learn/get-http-request-body-data-using-nodejs. [Accessed: 27-Jul-2022].
+
+[3]	“How to create an application with protected routes using the Authenticator component,” Amplify UI. [Online]. Available: https://ui.docs.amplify.aws/react/guides/auth-protected? [Accessed: 27-Jul-2022].
+
+[4]	“Npm: React-file-base64,” npm. [Online]. Available: https://www.npmjs.com/package/react-file-base64. [Accessed: 27-Jul-2022].
+
+[5]	B. A. Better Dev, “AWS SAM tutorial (with a lambda example!),” 11-Jan-2021. [Online]. Available: https://www.youtube.com/watch?v=MipjLaTp5nA. [Accessed: 27-Jul-2022].
+
+[6]	“NodeJs for AWS,” Amazon.com. [Online]. Available: https://aws.amazon.com/sdk-for-javascript/. [Accessed: 27-Jul-2022].
+
+
