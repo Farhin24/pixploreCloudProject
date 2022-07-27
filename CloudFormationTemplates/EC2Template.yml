@@ -1,0 +1,33 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: ""
+Resources:
+    EC2Instance:
+        Type: "AWS::EC2::Instance"
+        Properties:
+            ImageId: "ami-0cff7528ff583bf9a"
+            InstanceType: "t2.large"
+            KeyName: "vockey"
+            AvailabilityZone: !Sub "${AWS::Region}c"
+            Tenancy: "default"
+            SubnetId: "subnet-0301b611a576481c7"
+            EbsOptimized: false
+            SecurityGroupIds: 
+              - "sg-07a293f509dfbc4dd"
+            SourceDestCheck: true
+            BlockDeviceMappings: 
+              - 
+                DeviceName: "/dev/xvda"
+                Ebs: 
+                    Encrypted: false
+                    VolumeSize: 30
+                    SnapshotId: "snap-08f1069dfde2007ba"
+                    VolumeType: "gp2"
+                    DeleteOnTermination: true
+            Tags: 
+              - 
+                Key: "Name"
+                Value: "PIXPLORE-PROD"
+            HibernationOptions: 
+                Configured: false
+            EnclaveOptions: 
+                Enabled: false

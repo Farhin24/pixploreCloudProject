@@ -1,0 +1,110 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: ""
+Resources:
+    IAMUser:
+        Type: "AWS::IAM::User"
+        Properties:
+            Path: "/"
+            UserName: "cfmTestpixplore-amplify"
+            ManagedPolicyArns: 
+              - "arn:aws:iam::aws:policy/AdministratorAccess"
+              - "arn:aws:iam::aws:policy/AdministratorAccess-Amplify"
+
+    IAMUser2:
+        Type: "AWS::IAM::User"
+        Properties:
+            Path: "/"
+            UserName: "cfmTestpixplore-user1"
+            ManagedPolicyArns: 
+              - "arn:aws:iam::aws:policy/AmazonCognitoDeveloperAuthenticatedIdentities"
+              - "arn:aws:iam::aws:policy/AmazonCognitoReadOnly"
+              - "arn:aws:iam::aws:policy/AmazonCognitoPowerUser"
+              - "arn:aws:iam::aws:policy/AmazonESCognitoAccess"
+              - "arn:aws:iam::aws:policy/AmazonOpenSearchServiceCognitoAccess"
+
+    IAMRole:
+        Type: "AWS::IAM::Role"
+        Properties:
+            Path: "/service-role/"
+            RoleName: "cfmTestaddPostByUser-role-bfss07vg"
+            AssumeRolePolicyDocument: "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}"
+            MaxSessionDuration: 3600
+            ManagedPolicyArns: 
+              - !Sub "arn:aws:iam::${AWS::AccountId}:policy/service-role/AWSLambdaBasicExecutionRole-47f2939d-d0d3-421c-8389-eec9eb011fbc"
+
+    IAMRole2:
+        Type: "AWS::IAM::Role"
+        Properties:
+            Path: "/service-role/"
+            RoleName: "cfmTestaddToDynamo"
+            AssumeRolePolicyDocument: "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}"
+            MaxSessionDuration: 3600
+            ManagedPolicyArns: 
+              - !Sub "arn:aws:iam::${AWS::AccountId}:policy/service-role/AWSLambdaTestHarnessExecutionRole-244d16f7-a620-4ec4-bce6-dc97923d48b3"
+              - !Sub "arn:aws:iam::${AWS::AccountId}:policy/service-role/AWSLambdaRekognitionNoDataAccessExecutionRole-325c2bb0-e720-4310-95cc-6dbcc02c3750"
+              - !Sub "arn:aws:iam::${AWS::AccountId}:policy/service-role/AWSLambdaMicroserviceExecutionRole-cc1bd04c-caff-47e2-ab4d-1bba798c2ce5"
+              - !Sub "arn:aws:iam::${AWS::AccountId}:policy/service-role/AWSLambdaBasicExecutionRole-d3e67b47-fee7-489e-9496-da48d57242d7"
+
+    IAMRole3:
+        Type: "AWS::IAM::Role"
+        Properties:
+            Path: "/"
+            RoleName: "cfmTestamplify-pixplore-dev-231613-authRole"
+            AssumeRolePolicyDocument: !Sub "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Federated\":\"cognito-identity.amazonaws.com\"},\"Action\":\"sts:AssumeRoleWithWebIdentity\",\"Condition\":{\"StringEquals\":{\"cognito-identity.amazonaws.com:aud\":\"${AWS::Region}:dfa3c219-725f-4c70-bc28-a0f46ea7b8c7\"},\"ForAnyValue:StringLike\":{\"cognito-identity.amazonaws.com:amr\":\"authenticated\"}}}]}"
+            MaxSessionDuration: 3600
+            Description: ""
+            Tags: 
+              - 
+                Key: "user:Application"
+                Value: "pixplore"
+              - 
+                Key: "user:Stack"
+                Value: "dev"
+
+    IAMRole4:
+        Type: "AWS::IAM::Role"
+        Properties:
+            Path: "/"
+            RoleName: !Sub "${IAMRole3}-idp"
+            AssumeRolePolicyDocument: "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}"
+            MaxSessionDuration: 3600
+            Description: ""
+            Tags: 
+              - 
+                Key: "user:Application"
+                Value: "pixplore"
+              - 
+                Key: "user:Stack"
+                Value: "dev"
+
+    IAMRole5:
+        Type: "AWS::IAM::Role"
+        Properties:
+            Path: "/"
+            RoleName: "cfmTestamplify-pixploreamplify-dev-194712-authRole"
+            AssumeRolePolicyDocument: !Sub "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Federated\":\"cognito-identity.amazonaws.com\"},\"Action\":\"sts:AssumeRoleWithWebIdentity\",\"Condition\":{\"StringEquals\":{\"cognito-identity.amazonaws.com:aud\":\"${AWS::Region}:8680df4c-5910-4e27-a11b-db6e4ef67482\"},\"ForAnyValue:StringLike\":{\"cognito-identity.amazonaws.com:amr\":\"authenticated\"}}}]}"
+            MaxSessionDuration: 3600
+            Description: ""
+            Tags: 
+              - 
+                Key: "user:Application"
+                Value: "pixploreamplify"
+              - 
+                Key: "user:Stack"
+                Value: "dev"
+
+    IAMRole6:
+        Type: "AWS::IAM::Role"
+        Properties:
+            Path: "/"
+            RoleName: "cfmTestamplify-pixplore-dev-231613-unauthRole"
+            AssumeRolePolicyDocument: !Sub "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Federated\":\"cognito-identity.amazonaws.com\"},\"Action\":\"sts:AssumeRoleWithWebIdentity\",\"Condition\":{\"StringEquals\":{\"cognito-identity.amazonaws.com:aud\":\"${AWS::Region}:dfa3c219-725f-4c70-bc28-a0f46ea7b8c7\"},\"ForAnyValue:StringLike\":{\"cognito-identity.amazonaws.com:amr\":\"unauthenticated\"}}}]}"
+            MaxSessionDuration: 3600
+            Description: ""
+            Tags: 
+              - 
+                Key: "user:Application"
+                Value: "pixplore"
+              - 
+                Key: "user:Stack"
+                Value: "dev"

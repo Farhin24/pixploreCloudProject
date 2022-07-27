@@ -1,0 +1,222 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: An AWS Serverless Specification template describing your function.
+Resources:  
+  fetchInterest2CloudFormation:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      CodeUri: fetchInterest2/
+      Handler: index.handler
+      Runtime: nodejs12.x      
+      Description: >-
+        Fetch interest of the user.
+      MemorySize: 512
+      Timeout: 10
+      Role: 'arn:aws:iam::046430716681:role/service-role/uniqSetterDb-role-m87i9a36'
+      Tags:
+        'lambda-console:blueprint': microservice-http-endpoint  
+      Events:
+        fetchInterest2CloudFormationEvent:
+          Type: Api
+          Properties:
+            Path: /fetchInterest2
+            Method: post
+  
+  fetchInterestsByUsernameCloudFormation:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      CodeUri: fetchInterestsByUsername/
+      Handler: index.handler
+      Runtime: nodejs16.x      
+      Description: ''
+      MemorySize: 128
+      Timeout: 3
+      Role: 'arn:aws:iam::046430716681:role/service-role/uniqSetterDb-role-m87i9a36'  
+      Events:
+        fetchInterestsByUsernameCloudFormationEvent:
+          Type: Api
+          Properties:
+            Path: /fetchInterestByUsername
+            Method: post
+
+  fetchPostByUserIdCloudFormation:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      CodeUri: fetchPostByUserId/
+      Handler: index.handler      
+      Runtime: nodejs16.x
+      Description: ''      
+      Role: 'arn:aws:iam::046430716681:role/service-role/dynamoAccessRolePixplore'
+      Events:
+        FetchPostByUserIdCloudFormationEvent:
+          Type: Api
+          Properties:
+            Path: /fetchPostByUserId
+            Method: post
+
+  fetchSavedPostsCloudFormation:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      CodeUri: fetchSavedPosts/
+      Handler: index.handler
+      Runtime: nodejs16.x      
+      Description: ''
+      MemorySize: 128
+      Timeout: 3
+      Role: 'arn:aws:iam::046430716681:role/service-role/uniqSetterDb-role-m87i9a36'
+      Events:
+        fetchSavedPostsCloudFormationEvent:
+          Type: Api
+          Properties:
+            Path: /fetchSavedPosts
+            Method: post
+
+  fetchUserProfileCloudFormation:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      CodeUri: fetchUserProfile/
+      Handler: index.handler
+      Runtime: nodejs16.x      
+      Description: ''
+      MemorySize: 128
+      Timeout: 3
+      Role: 'arn:aws:iam::046430716681:role/service-role/uniqSetterDb-role-m87i9a36'
+      Events:
+        fetchUserProfileCloudFormationEvent:
+          Type: Api
+          Properties:
+            Path: /fetchUserProfile
+            Method: post
+
+  interestPutCloudFormation:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      CodeUri: interestPut/
+      Handler: index.handler
+      Runtime: nodejs16.x      
+      Description: ''
+      MemorySize: 128
+      Timeout: 3
+      Role: 'arn:aws:iam::046430716681:role/service-role/uniqSetterDb-role-m87i9a36'
+      Events:
+        interestPutCloudFormationEvent:
+          Type: Api
+          Properties:
+            Path: /interestPut
+            Method: post
+
+  photosFetcherCloudFormation:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      CodeUri: photosFetcher/
+      Handler: index.handler
+      Runtime: nodejs12.x      
+      Description: >-
+        A simple backend (read/write to DynamoDB) with a RESTful API endpoint
+        using Amazon API Gateway.
+      MemorySize: 512
+      Timeout: 10
+      Role: 'arn:aws:iam::046430716681:role/service-role/uniqSetterDb-role-m87i9a36'
+      Tags:
+        'lambda-console:blueprint': microservice-http-endpoint
+      Events:
+        photosFetcherCloudFormationEvent:
+          Type: Api
+          Properties:
+            Path: /photosFetcher
+            Method: post
+
+  postImageToS3CloudFormation:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      CodeUri: postImageToS3/
+      Handler: index.handler
+      Runtime: nodejs16.x      
+      Description: ''
+      MemorySize: 128
+      Timeout: 3
+      Role: 'arn:aws:iam::046430716681:role/service-role/dynamoAccessRolePixplore'
+      Events:
+        postImageToS3CloudFormationEvent:
+          Type: Api
+          Properties:
+            Path: /addImageToS3
+            Method: post
+
+  profileFetcherCloudFormation:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      CodeUri: profileFetcher/
+      Handler: index.handler
+      Runtime: nodejs16.x      
+      Description: ''
+      MemorySize: 128
+      Timeout: 3
+      Role: 'arn:aws:iam::046430716681:role/service-role/uniqSetterDb-role-m87i9a36'
+      Events:
+        profileFetcherCloudFormationEvent:
+          Type: Api
+          Properties:
+            Path: /profileFetcher
+            Method: post
+
+  uniqSetterDbCloudFormarion:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      CodeUri: uniqSetterDb/
+      Handler: index.handler
+      Runtime: nodejs16.x      
+      Description: ''
+      MemorySize: 128
+      Timeout: 3
+      Role: 'arn:aws:iam::046430716681:role/service-role/uniqSetterDb-role-m87i9a36'
+      Events:
+        BucketEvent1:
+          Type: S3
+          Properties:
+            Bucket:
+              Ref: Bucket1
+            Events:
+              - 's3:ObjectCreated:*'
+        uniqSetterDbCloudFormarionEvent:
+          Type: Api
+          Properties:
+            Path: /uniqSetterDb
+            Method: post
+
+  Bucket1:
+    Type: 'AWS::S3::Bucket'
+
+  savedPostsCloudFormation:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      CodeUri: savedPosts/
+      Handler: index.handler
+      Runtime: nodejs16.x      
+      Description: ''
+      MemorySize: 128
+      Timeout: 3
+      Role: 'arn:aws:iam::046430716681:role/service-role/addToDynamo'
+      Events:
+        savedPostsCloudFormationEvent:
+          Type: Api
+          Properties:
+            Path: /savedPosts
+            Method: post
+
+  userProfileChangesCloudFormation:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      CodeUri: userProfileChanges/
+      Handler: index.handler
+      Runtime: nodejs16.x      
+      Description: ''
+      MemorySize: 128
+      Timeout: 3
+      Role: 'arn:aws:iam::046430716681:role/service-role/uniqSetterDb-role-m87i9a36'
+      Events:
+        userProfileChangesCloudFormationEvent:
+          Type: Api
+          Properties:
+            Path: /userProfileChanges
+            Method: post
